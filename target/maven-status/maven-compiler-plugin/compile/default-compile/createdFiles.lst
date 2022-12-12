@@ -1,3 +1,4 @@
-com/gabrielpdc/app/App.class
-com/gabrielpdc/app/CommandLineBuilder$OperatingSystem.class
-com/gabrielpdc/app/CommandLineBuilder.class
+com\gabrielpdc\app\CommandLineBuilder$OperatingSystem.class
+com\gabrielpdc\app\App.class
+com\gabrielpdc\app\CommandLineBuilder$Execution.class
+com\gabrielpdc\app\CommandLineBuilder.class

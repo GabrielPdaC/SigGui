@@ -1,8 +1,6 @@
 package com.gabrielpdc.app;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -12,16 +10,16 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class CommandLIneBuilderTest 
+public class CommandLIneBuilderTest
 {
     private CommandLineBuilder commandLineBuilder;
     private ArrayList<String> expectedCommandLine;
-    
+
     @Before
     public void init() {
         commandLineBuilder = new CommandLineBuilder();
         expectedCommandLine = new ArrayList<>();
-    }  
+    }
 
     @Test
     public void getCommandLineTest() {
@@ -69,20 +67,25 @@ public class CommandLIneBuilderTest
 }
 
 /**
- * 
+ *
  * sig << Run desktop only
- * 
+ *
  * sig tc << Run Thin Client
- * >> itc 
+ * >> itc
  * >> sig tc
  *
  * sig tc << Run Thin Client (Linux)
  * >> itc linux
  * >> sig tc
- * 
+ *
  * sig tc << Run Thin Client (Multi Tenant)
  * >> mt itc sig
- * 
+ *
  * sig tc << Run Thin Client (Multi Tenant/Linux)
  * >> mt itc linux sig
+ *
+ * GoGlobal?
+ *
+ * WebClient?
+ *
 */
