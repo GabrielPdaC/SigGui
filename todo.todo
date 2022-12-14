@@ -1,0 +1,154 @@
+
+    // /**
+    //  * Indica o sistema operacional do servidor
+    //  *
+    //  * @param serverOperatingSystem
+    //  * @return Própria instância
+    //  * @throws SigerCommandLineException
+    //  */
+    // public SigerCommandLine setServerOperatingSystem(ServerOperatingSystem serverOperatingSystem)
+    //         throws SigerCommandLineException;
+
+    // /**
+    //  * Indica se é uma execução Multi Tenant
+    //  *
+    //  * @param isServerMultiTenant
+    //  * @return Própria instância
+    //  * @throws SigerCommandLineException
+    //  */
+    // public SigerCommandLine setServerMultiTenant(boolean isServerMultiTenant) throws SigerCommandLineException;
+
+    // /**
+    //  * Indica o tipo de execução do client
+    //  *
+    //  * @param clientExecutionType
+    //  * @return Própria instância
+    //  * @throws SigerCommandLineException
+    //  */
+    // public SigerCommandLine setClientExecutionType(ClientExecutionType clientExecutionType)
+    //         throws SigerCommandLineException;
+
+
+    FireVMLinux
+        - buildCommandLine
+          return ["VMLinux.bat"];
+
+    SigerServer
+       - list
+          - FireVMLinux
+          - ITC(linux)
+        - buildCommandLine
+        reusult: String[]
+        list.foreach(a -> {
+            reusult.push(a.buildCommandLine())
+        })
+        return reusul;
+
+        SigerClient
+            -list
+               - ServerWebCliet()
+               - SIG(webclient)
+
+
+
+
+
+    /* Script para executar o Go-Global */
+    static String GO_GLOBAL_RUNNER = "goglobal";
+
+    /* Sistemas operacionais para executar o server */
+    public enum ServerOperatingSystem {
+        WINDOWS,
+        LINUX;
+    }
+
+
+    /**
+     * Indica o sistema operacional que vai executar o server
+     *
+     * @param serverOperatingSystem
+     * @return Própria instância
+     * @throws SigerCommandLineException
+     */
+    public SigerCommandLineBuilder setServerOperatingSystem(ServerOperatingSystem serverOperatingSystem)
+            throws SigerCommandLineException {
+        sigerCommandLine.setServerOperatingSystem(serverOperatingSystem);
+        return this;
+    }
+
+    /**
+     * Indica se deve executar no ambiente Multi Tenant
+     *
+     * @param isServerMultiTenant
+     * @return Própria instância
+     * @throws SigerCommandLineException
+     */
+    public SigerCommandLineBuilder setServerMultiTenant(boolean isServerMultiTenant) throws SigerCommandLineException {
+        sigerCommandLine.setServerMultiTenant(isServerMultiTenant);
+        return this;
+    }
+
+    /**
+     * Indica o tipo de execução do client
+     *
+     * @param clientExecutionType
+     * @return Própria instância
+     * @throws SigerCommandLineException
+     */
+    public SigerCommandLineBuilder setClientExecutionType(ClientExecutionType clientExecutionType)
+            throws SigerCommandLineException {
+        sigerCommandLine.setClientExecutionType(clientExecutionType);
+        return this;
+    }
+
+    /**
+     * Retorna linha de comando para execução do SIGER
+     *
+     * @return ArrayList<String>
+     * @throws SigerCommandLineException
+     */
+    public ArrayList<String> getCommandLine() throws SigerCommandLineException {
+        return sigerCommandLine.getCommandLine();
+    }
+
+
+// Desktop
+Sig.bat
+
+Java:
+CommandLineBuilder commandLineBuilder = new CommandLineBuilder(Architecture.DESKTOP)
+commandLineBuilder.build();
+
+// Desktop com Go-Global
+GoGlobal.bat
+    cd [base_dir]
+    Sig.bat
+
+Java:
+CommandLineBuilder commandLineBuilder = new CommandLineBuilder(Architecture.DESKTOP)
+commandLineBuilder.setGoGlobal(true).build();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Thin Client
+ITC.bat
+Sig.bat TC
+
+Java:
+CommandLineBuilder commandLineBuilder = new CommandLineBuilder(Architecture.THIN_CLIENT)
+commandLineBuilder.build();
+
+// Thin Client
+CommandLineBuilder commandLineBuilder = new CommandLineBuilder(Architecture.THIN_CLIENT)
+commandLineBuilder.setGoGlobal(true).build();

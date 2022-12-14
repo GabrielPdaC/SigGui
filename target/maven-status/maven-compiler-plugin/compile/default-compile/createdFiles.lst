@@ -1,4 +1,6 @@
-com\gabrielpdc\app\CommandLineBuilder$OperatingSystem.class
-com\gabrielpdc\app\App.class
-com\gabrielpdc\app\CommandLineBuilder$Execution.class
-com\gabrielpdc\app\CommandLineBuilder.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilderException.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilder$1.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilder$ClientExecutionType.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilder$Architecture.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilder.class
+com\gabrielpdc\commandlinebuilder\CommandLineBuilder$ServerOperatingSystem.class
