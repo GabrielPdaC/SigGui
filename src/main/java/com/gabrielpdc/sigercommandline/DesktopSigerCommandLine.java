@@ -18,7 +18,7 @@ public class DesktopSigerCommandLine implements SigerCommandLines {
     }
 
     @Override
-    public ArrayList<String> buildCommandLine() throws SigerCommandLineException {
+    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
         return null;
     }
 

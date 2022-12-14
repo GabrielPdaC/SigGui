@@ -18,7 +18,7 @@ public class SigCommandLines implements SigerCommandLines {
     }
 
     @Override
-    public ArrayList<String> buildCommandLine() throws SigerCommandLineException {
+    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
         ArrayList<String> commandLines = new ArrayList<>();
         commandLines.add(SIGER_RUNNER);
         return commandLines;

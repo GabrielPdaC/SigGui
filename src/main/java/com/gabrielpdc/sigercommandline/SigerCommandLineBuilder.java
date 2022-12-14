@@ -24,7 +24,7 @@ public class SigerCommandLineBuilder {
 
     public ArrayList<String> build() throws SigerCommandLineException {
         ArrayList<String> commandLines = new ArrayList<>();
-        for (String commandLine: sigerCommandLine.buildCommandLine()) {
+        for (String commandLine: sigerCommandLine.generateCommandLine()) {
             commandLines.add(commandLine);
         }
         return commandLines;

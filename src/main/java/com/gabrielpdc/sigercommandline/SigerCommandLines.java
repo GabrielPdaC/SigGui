@@ -13,5 +13,5 @@ public interface SigerCommandLines {
      * @return linha de comando para execução
      * @throws SigerCommandLineException
      */
-    public ArrayList<String> buildCommandLine() throws SigerCommandLineException;
+    public ArrayList<String> generateCommandLine() throws SigerCommandLineException;
 }
