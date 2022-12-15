@@ -1,4 +1,4 @@
-package com.gabrielpdc.sigercommandline;
+package com.gabrielpdc.sigercommandline.models;
 
 public class SigerCommandLineException extends Exception {
 
