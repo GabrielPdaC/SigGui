@@ -2,5 +2,6 @@
     "cSpell.language": "en,pt,pt-BR",
     "files.exclude": {
         "**/PsPadBK/": true
-    }
+    },
+    "java.debug.settings.onBuildFailureProceed": true
 }
