@@ -1,7 +1,6 @@
-package com.gabrielpdc.sigercommandline;
+package com.gabrielpdc.sigercommandline.models;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -23,47 +22,36 @@ public class MultiTenantTest {
     }
 
     @Test
-    public void multiTenantSigTest() {
+    public void multiTenantSigTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("MT.bat");
         expectedCommandLine.add("Sig.bat");
-        try {
-            actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).build().generateCommandLine();
-        } catch (SigerCommandLineException e) {
-            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
-        }
+        actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
     @Test
-    public void multiTenantItcTest() {
+    public void multiTenantItcTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("MT.bat");
         expectedCommandLine.add("ITC.bat");
-        try {
-            actualsCommandLine = MultiTenant.builder().itc(itcBuilder.build()).build().generateCommandLine();
-        } catch (SigerCommandLineException e) {
-            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
-        }
+        actualsCommandLine = MultiTenant.builder().itc(itcBuilder.build()).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
     @Test
-    public void multiTenantSigItcTest() {
+    public void multiTenantSigItcTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("MT.bat");
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("Sig.bat");
-        try {
-            actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).itc(itcBuilder.build()).build().generateCommandLine();
-        } catch (SigerCommandLineException e) {
-            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
-        }
+        actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).itc(itcBuilder.build()).build()
+                .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
     @Test
-    public void multiTenantSigItcParamsTest() {
+    public void multiTenantSigItcParamsTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("MT.bat");
         expectedCommandLine.add("ITC.bat");
@@ -74,11 +62,8 @@ public class MultiTenantTest {
         expectedCommandLine.add("D");
         sigBuilder.isDebug(true).menu("512A");
         itcBuilder.isDebug(true).isShowInfo(true);
-        try {
-            actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).itc(itcBuilder.build()).build().generateCommandLine();
-        } catch (SigerCommandLineException e) {
-            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
-        }
+        actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).itc(itcBuilder.build()).build()
+                .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 

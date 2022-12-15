@@ -1,4 +1,4 @@
-package com.gabrielpdc.sigercommandline;
+package com.gabrielpdc.sigercommandline.models;
 
 import java.util.ArrayList;
 import java.util.Optional;
