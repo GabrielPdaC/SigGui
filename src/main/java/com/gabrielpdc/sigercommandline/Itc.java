@@ -10,14 +10,14 @@ public final class Itc implements SigerCommandLines {
     private static String PORT_PARAM = "PORT:";
     private static String DEBUG_PARAM = "D";
     private static String ARCH64_PARAM = "64";
-    private static String EX_PARAM = "EX";
+    private static String JAVA_OUTPUT_PARAM = "EX";
     private static String LINUX_PARAM = "LINUX";
 
     private final boolean isPanel;
     private final Optional<Integer> port;
     private final boolean isDebug;
     private final boolean is64;
-    private final boolean isShowInfo;
+    private final boolean isJavaOutput;
     private final OperatingSystem serverOperatingSystem;
 
     /* Sistemas operacionais para executar o server */
@@ -32,7 +32,7 @@ public final class Itc implements SigerCommandLines {
         this.port = port;
         this.isDebug = isDebug;
         this.is64 = is64;
-        this.isShowInfo = isShowInfo;
+        this.isJavaOutput = isShowInfo;
         this.serverOperatingSystem = serverOperatingSystem;
     }
 
@@ -56,8 +56,8 @@ public final class Itc implements SigerCommandLines {
         if (is64) {
             commandLines.add(ARCH64_PARAM);
         }
-        if (isShowInfo) {
-            commandLines.add(EX_PARAM);
+        if (isJavaOutput) {
+            commandLines.add(JAVA_OUTPUT_PARAM);
         }
         if (serverOperatingSystem == OperatingSystem.LINUX) {
             commandLines.add(LINUX_PARAM);

@@ -11,6 +11,8 @@ public final class Sig implements SigerCommandLines {
     private static final String COMPANY_PARAM = "VS-SIGEMP:";
     private static final String MENU_PARAM = "VS-OPCMEN:";
     private static final String DEBUG_PARAM = "D";
+    private static final String DEBUG_JAVA_PARAM = "DJ";
+    private static final String PROFILER_JAVA_PARAM = "PJ";
     private static final String WEB_CLIENT_PARAM = "WEBCLI";
     private static final String THIN_CLIENT_PARAM = "TC";
     private static final String THIN_CLIENT_PORT_PARAM = "TCPORT:";
@@ -20,16 +22,22 @@ public final class Sig implements SigerCommandLines {
     private final Optional<String> password;
     private final Optional<String> menu;
     private final boolean isDebug;
+    private final boolean isDebugJava;
+    private final boolean isProfiler;
     private final boolean isWebClient;
     private final boolean isThinClient;
     private final Optional<Integer> thinClientPort;
 
-    public Sig(Optional<String> company, Optional<String> user, Optional<String> password, Optional<String> menu, boolean isDebug, boolean isWebClient, boolean isThinClient, Optional<Integer> thinClientPort) {
+    public Sig(Optional<String> company, Optional<String> user, Optional<String> password, Optional<String> menu,
+            boolean isDebug, boolean isDebugJava, boolean isProfiler, boolean isWebClient, boolean isThinClient,
+            Optional<Integer> thinClientPort) {
         this.company = company;
         this.user = user;
         this.password = password;
         this.menu = menu;
         this.isDebug = isDebug;
+        this.isDebugJava = isDebugJava;
+        this.isProfiler = isProfiler;
         this.isWebClient = isWebClient;
         this.isThinClient = isThinClient;
         this.thinClientPort = thinClientPort;
@@ -58,6 +66,12 @@ public final class Sig implements SigerCommandLines {
         if (isDebug) {
             commandLines.add(DEBUG_PARAM);
         }
+        if (isDebugJava) {
+            commandLines.add(DEBUG_JAVA_PARAM);
+        }
+        if (isProfiler) {
+            commandLines.add(PROFILER_JAVA_PARAM);
+        }
         if (isWebClient) {
             commandLines.add(WEB_CLIENT_PARAM);
         }
@@ -77,6 +91,8 @@ public final class Sig implements SigerCommandLines {
         private Optional<String> password = Optional.empty();
         private Optional<String> menu = Optional.empty();
         private boolean isDebug = false;
+        private boolean isDebugJava = false;
+        private boolean isProfiler = false;
         private boolean isWebClient = false;
         private boolean isThinClient = false;
         private Optional<Integer> thinClientPort = Optional.empty();
@@ -106,6 +122,16 @@ public final class Sig implements SigerCommandLines {
             return this;
         }
 
+        public Builder isDebugJava(boolean isDebugJava) {
+            this.isDebugJava = isDebugJava;
+            return this;
+        }
+
+        public Builder isProfiler(boolean isProfiler) {
+            this.isProfiler = isProfiler;
+            return this;
+        }
+
         public Builder isWebClient(boolean isWebClient) {
             this.isWebClient = isWebClient;
             return this;
@@ -122,7 +148,7 @@ public final class Sig implements SigerCommandLines {
         }
 
         public Sig build() {
-            return new Sig(company, user, password, menu, isDebug, isWebClient, isThinClient, thinClientPort);
+            return new Sig(company, user, password, menu, isDebug, isDebugJava, isProfiler, isWebClient, isThinClient, thinClientPort);
         }
     }
 }

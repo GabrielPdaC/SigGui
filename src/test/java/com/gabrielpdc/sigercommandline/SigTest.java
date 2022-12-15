@@ -115,6 +115,36 @@ public class SigTest {
     }
 
     @Test
+    public void sigDebugJavaTest() {
+        // Teste de execução com Web Client
+        expectedCommandLine.add("Sig.bat");
+        expectedCommandLine.add("DJ");
+        try {
+            actualsCommandLine = Sig.builder()
+                    .isDebugJava(true)
+                    .build()
+                    .generateCommandLine();
+        } catch (SigerCommandLineException e) {
+            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
+        }
+        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+    }
+    @Test
+    public void sigProfilerTest() {
+        // Teste de execução com Web Client
+        expectedCommandLine.add("Sig.bat");
+        expectedCommandLine.add("PJ");
+        try {
+            actualsCommandLine = Sig.builder()
+                    .isProfiler(true)
+                    .build()
+                    .generateCommandLine();
+        } catch (SigerCommandLineException e) {
+            fail("Não conseguiu criar linha de comando 'Sig.bat'.");
+        }
+        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+    }
+    @Test
     public void sigDebugTest() {
         // Teste de execução com Web Client
         expectedCommandLine.add("Sig.bat");

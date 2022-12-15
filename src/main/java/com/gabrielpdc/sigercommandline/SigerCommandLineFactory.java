@@ -2,7 +2,7 @@ package com.gabrielpdc.sigercommandline;
 
 import java.util.ArrayList;
 
-public class SigerCommandLineBuilder {
+public class SigerCommandLineFactory {
 
     /* Arquitetura de execução */
     private Architecture architecture;
@@ -18,15 +18,22 @@ public class SigerCommandLineBuilder {
     /**
      * @param architecture
      */
-    public SigerCommandLineBuilder(Architecture architecture) {
+    public SigerCommandLineFactory(Architecture architecture) {
         this.architecture = architecture;
+        if (architecture == Architecture.DESKTOP) {
+            sigerCommandLine = new DesktopSigerCommandLines.Builder(Sig.builder().build()).build();
+        } else {
+            sigerCommandLine = new ThinClientSigerCommandLines.Builder().build();
+        }
     }
 
     public ArrayList<String> build() throws SigerCommandLineException {
         ArrayList<String> commandLines = new ArrayList<>();
-        for (String commandLine: sigerCommandLine.generateCommandLine()) {
+        for (String commandLine : sigerCommandLine.generateCommandLine()) {
             commandLines.add(commandLine);
         }
         return commandLines;
     }
+
+
 }

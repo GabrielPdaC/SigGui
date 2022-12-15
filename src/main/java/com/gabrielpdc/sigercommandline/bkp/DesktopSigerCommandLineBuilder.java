@@ -1,14 +1,14 @@
 package com.gabrielpdc.sigercommandline.bkp;
 
-import com.gabrielpdc.sigercommandline.DesktopSigerCommandLine;
+import com.gabrielpdc.sigercommandline.DesktopSigerCommandLines;
 
 public class DesktopSigerCommandLineBuilder {
 
-    private DesktopSigerCommandLine desktopSigerCommandLine;
+    private DesktopSigerCommandLines desktopSigerCommandLine;
     private boolean isGoGlobal;
 
     public DesktopSigerCommandLineBuilder() {
-        desktopSigerCommandLine = new DesktopSigerCommandLine();
+        desktopSigerCommandLine = new DesktopSigerCommandLines();
     }
 
     public DesktopSigerCommandLineBuilder setGoGlobal(boolean isGoGlobal) {
@@ -16,8 +16,8 @@ public class DesktopSigerCommandLineBuilder {
         return this;
     }
 
-    public DesktopSigerCommandLine build() {
-        desktopSigerCommandLine = new DesktopSigerCommandLine(this.isGoGlobal);
+    public DesktopSigerCommandLines build() {
+        desktopSigerCommandLine = new DesktopSigerCommandLines(this.isGoGlobal);
         return this.desktopSigerCommandLine;
     }
 
