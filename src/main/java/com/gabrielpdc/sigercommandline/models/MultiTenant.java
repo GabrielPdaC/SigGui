@@ -32,7 +32,7 @@ public class MultiTenant implements SigerCommandLines {
         return commandLines;
     }
 
-    public static class Builder {
+    public static class Builder implements CommandLineBuilder {
 
         private Optional<Sig> sig = Optional.empty();
         private Optional<Itc> itc = Optional.empty();
@@ -47,6 +47,7 @@ public class MultiTenant implements SigerCommandLines {
             return this;
         }
 
+        @Override
         public MultiTenant build() {
             return new MultiTenant(sig, itc);
         }

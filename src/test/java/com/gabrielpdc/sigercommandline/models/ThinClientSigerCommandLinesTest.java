@@ -55,7 +55,7 @@ public class ThinClientSigerCommandLinesTest {
         actualsCommandLine = ThinClientSigerCommandLines.builder()
                 .vmLinux(vmLinux)
                 .itc(itcBuilder.serverOperatingSystem(OperatingSystem.LINUX).build())
-                .sig(sigBuilder.isThinClient(true).build())
+                .sig(sigBuilder.withThinClient(true).build())
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -97,14 +97,13 @@ public class ThinClientSigerCommandLinesTest {
         expectedCommandLine.add("SRVWC.bat");
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("WEBCLI");
-        sigBuilder.isWebClient(true);
+        sigBuilder.withWebClient(true);
         actualsCommandLine = ThinClientSigerCommandLines.builder()
                 .itc(itcBuilder.build())
                 .serverWebClient(serverWebClientBuilder.build())
                 .sig(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        System.out.println(actualsCommandLine.toString());
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 

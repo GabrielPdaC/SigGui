@@ -84,7 +84,7 @@ public final class Sig implements SigerCommandLines {
         return commandLines;
     }
 
-    public static final class Builder {
+    public static final class Builder implements CommandLineBuilder  {
 
         private Optional<String> company = Optional.empty();
         private Optional<String> user = Optional.empty();
@@ -117,27 +117,27 @@ public final class Sig implements SigerCommandLines {
             return this;
         }
 
-        public Builder isDebug(boolean isDebug) {
+        public Builder withDebug(boolean isDebug) {
             this.isDebug = isDebug;
             return this;
         }
 
-        public Builder isDebugJava(boolean isDebugJava) {
+        public Builder withDebugJava(boolean isDebugJava) {
             this.isDebugJava = isDebugJava;
             return this;
         }
 
-        public Builder isProfiler(boolean isProfiler) {
+        public Builder withProfiler(boolean isProfiler) {
             this.isProfiler = isProfiler;
             return this;
         }
 
-        public Builder isWebClient(boolean isWebClient) {
+        public Builder withWebClient(boolean isWebClient) {
             this.isWebClient = isWebClient;
             return this;
         }
 
-        public Builder isThinClient(boolean isThinClient) {
+        public Builder withThinClient(boolean isThinClient) {
             this.isThinClient = isThinClient;
             return this;
         }
@@ -147,6 +147,7 @@ public final class Sig implements SigerCommandLines {
             return this;
         }
 
+        @Override
         public Sig build() {
             return new Sig(company, user, password, menu, isDebug, isDebugJava, isProfiler, isWebClient, isThinClient, thinClientPort);
         }

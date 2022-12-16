@@ -28,7 +28,7 @@ public final class DesktopSigerCommandLines implements SigerCommandLines {
         return commandLines;
     }
 
-    public static final class Builder {
+    public static final class Builder implements CommandLineBuilder {
 
         private Optional<GoGlobal> goGlobal = Optional.empty();
         private Sig sig;
@@ -42,6 +42,7 @@ public final class DesktopSigerCommandLines implements SigerCommandLines {
             return this;
         }
 
+        @Override
         public DesktopSigerCommandLines build() {
             return new DesktopSigerCommandLines(goGlobal, sig);
         }

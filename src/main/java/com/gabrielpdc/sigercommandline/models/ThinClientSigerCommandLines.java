@@ -51,7 +51,7 @@ public class ThinClientSigerCommandLines implements SigerCommandLines {
         return commandLines;
     }
 
-    public static class Builder {
+    public static class Builder implements CommandLineBuilder  {
 
         private Optional<GoGlobal> goGlobal = Optional.empty();
         private Optional<VMLinux> vmLinux = Optional.empty();
@@ -90,6 +90,7 @@ public class ThinClientSigerCommandLines implements SigerCommandLines {
             return this;
         }
 
+        @Override
         public ThinClientSigerCommandLines build() {
             return new ThinClientSigerCommandLines(goGlobal, vmLinux, multiTenant, serverWebClient, itc, sig);
         }

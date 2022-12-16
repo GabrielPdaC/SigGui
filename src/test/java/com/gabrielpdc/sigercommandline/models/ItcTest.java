@@ -32,7 +32,7 @@ public class ItcTest {
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("PANEL");
         actualsCommandLine = Itc.builder()
-                .isPanel(true)
+                .withPanel(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -56,7 +56,7 @@ public class ItcTest {
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("D");
         actualsCommandLine = Itc.builder()
-                .isDebug(true)
+                .withDebug(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -68,7 +68,7 @@ public class ItcTest {
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("64");
         actualsCommandLine = Itc.builder()
-                .is64(true)
+                .with64bits(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -80,7 +80,7 @@ public class ItcTest {
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("EX");
         actualsCommandLine = Itc.builder()
-                .isShowInfo(true)
+                .withJavaOutput(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());

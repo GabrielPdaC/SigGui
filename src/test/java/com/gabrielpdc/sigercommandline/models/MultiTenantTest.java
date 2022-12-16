@@ -60,8 +60,8 @@ public class MultiTenantTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("VS-OPCMEN:512A");
         expectedCommandLine.add("D");
-        sigBuilder.isDebug(true).menu("512A");
-        itcBuilder.isDebug(true).isShowInfo(true);
+        sigBuilder.withDebug(true).menu("512A");
+        itcBuilder.withDebug(true).withJavaOutput(true);
         actualsCommandLine = MultiTenant.builder().sig(sigBuilder.build()).itc(itcBuilder.build()).build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());

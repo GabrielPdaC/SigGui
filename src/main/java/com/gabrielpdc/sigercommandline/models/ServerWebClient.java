@@ -45,33 +45,34 @@ public final class ServerWebClient implements SigerCommandLines {
         return commandLines;
     }
 
-    public static class Builder {
+    public static class Builder implements CommandLineBuilder {
 
         private boolean isShowInfo = false;
         private boolean isJavaOutput = false;
         private boolean isDebugJava = false;
         private boolean isTrunk = false;
 
-        public Builder isShowInfo(boolean isShowInfo) {
+        public Builder withShowInfo(boolean isShowInfo) {
             this.isShowInfo = isShowInfo;
             return this;
         }
 
-        public Builder isJavaOutput(boolean isJavaOutput) {
+        public Builder withJavaOutput(boolean isJavaOutput) {
             this.isJavaOutput = isJavaOutput;
             return this;
         }
 
-        public Builder isDebugJava(boolean isDebugJava) {
+        public Builder withDebugJava(boolean isDebugJava) {
             this.isDebugJava = isDebugJava;
             return this;
         }
 
-        public Builder isTrunk(boolean isTrunk) {
+        public Builder withTrunk(boolean isTrunk) {
             this.isTrunk = isTrunk;
             return this;
         }
 
+        @Override
         public ServerWebClient build() {
             return new ServerWebClient(isShowInfo, isJavaOutput, isDebugJava, isTrunk);
         }

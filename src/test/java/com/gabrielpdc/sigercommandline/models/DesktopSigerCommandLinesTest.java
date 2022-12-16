@@ -71,7 +71,7 @@ public class DesktopSigerCommandLinesTest {
         // Teste de execução com Web Client
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("DJ");
-        sigBuilder.isDebugJava(true);
+        sigBuilder.withDebugJava(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
@@ -83,7 +83,7 @@ public class DesktopSigerCommandLinesTest {
         // Teste de execução com Web Client
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("PJ");
-        sigBuilder.isProfiler(true);
+        sigBuilder.withProfiler(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
@@ -95,7 +95,7 @@ public class DesktopSigerCommandLinesTest {
         // Teste de execução com Web Client
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("D");
-        sigBuilder.isDebug(true);
+        sigBuilder.withDebug(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
@@ -163,7 +163,7 @@ public class DesktopSigerCommandLinesTest {
         expectedCommandLine.add("GoGlobal.bat");
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("DJ");
-        sigBuilder.isDebugJava(true);
+        sigBuilder.withDebugJava(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
@@ -177,7 +177,7 @@ public class DesktopSigerCommandLinesTest {
         expectedCommandLine.add("GoGlobal.bat");
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("PJ");
-        sigBuilder.isProfiler(true);
+        sigBuilder.withProfiler(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
@@ -191,7 +191,7 @@ public class DesktopSigerCommandLinesTest {
         expectedCommandLine.add("GoGlobal.bat");
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("D");
-        sigBuilder.isDebug(true);
+        sigBuilder.withDebug(true);
         actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
