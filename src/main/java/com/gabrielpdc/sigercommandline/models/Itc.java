@@ -26,13 +26,13 @@ public final class Itc implements SigerCommandLines {
         LINUX;
     }
 
-    public Itc(boolean isPanel, Optional<Integer> port, boolean isDebug, boolean is64, boolean isShowInfo,
+    public Itc(boolean isPanel, Optional<Integer> port, boolean isDebug, boolean is64, boolean isJavaOutput,
             OperatingSystem serverOperatingSystem) {
         this.isPanel = isPanel;
         this.port = port;
         this.isDebug = isDebug;
         this.is64 = is64;
-        this.isJavaOutput = isShowInfo;
+        this.isJavaOutput = isJavaOutput;
         this.serverOperatingSystem = serverOperatingSystem;
     }
 
@@ -65,16 +65,16 @@ public final class Itc implements SigerCommandLines {
         return commandLines;
     }
 
-    public static class Builder {
+    public static class Builder implements CommandLineBuilder {
 
         private boolean isPanel = false;
         private Optional<Integer> port = Optional.empty();
         private boolean isDebug = false;
-        private boolean is64 = false;
-        private boolean isShowInfo = false;
+        private boolean is64bits = false;
+        private boolean isJavaOutput = false;
         private OperatingSystem serverOperatingSystem = OperatingSystem.WINDOWS;
 
-        public Builder isPanel(boolean isPanel) {
+        public Builder withPanel(boolean isPanel) {
             this.isPanel = isPanel;
             return this;
         }
@@ -84,18 +84,18 @@ public final class Itc implements SigerCommandLines {
             return this;
         }
 
-        public Builder isDebug(boolean isDebug) {
+        public Builder withDebug(boolean isDebug) {
             this.isDebug = isDebug;
             return this;
         }
 
-        public Builder is64(boolean is64) {
-            this.is64 = is64;
+        public Builder with64bits(boolean is64bits) {
+            this.is64bits = is64bits;
             return this;
         }
 
-        public Builder isShowInfo(boolean isShowInfo) {
-            this.isShowInfo = isShowInfo;
+        public Builder withJavaOutput(boolean isJavaOutput) {
+            this.isJavaOutput = isJavaOutput;
             return this;
         }
 
@@ -104,8 +104,9 @@ public final class Itc implements SigerCommandLines {
             return this;
         }
 
+        @Override
         public Itc build() {
-            return new Itc(isPanel, port, isDebug, is64, isShowInfo, serverOperatingSystem);
+            return new Itc(isPanel, port, isDebug, is64bits, isJavaOutput, serverOperatingSystem);
         }
     }
 

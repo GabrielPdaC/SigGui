@@ -69,7 +69,7 @@ public class SigTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("TC");
         actualsCommandLine = Sig.builder()
-                .isThinClient(true)
+                .withThinClient(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -82,7 +82,7 @@ public class SigTest {
         expectedCommandLine.add("TC");
         expectedCommandLine.add("TCPORT:6000");
         actualsCommandLine = Sig.builder()
-                .isThinClient(true)
+                .withThinClient(true)
                 .thinClientPort(6000)
                 .build()
                 .generateCommandLine();
@@ -95,7 +95,7 @@ public class SigTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("DJ");
         actualsCommandLine = Sig.builder()
-                .isDebugJava(true)
+                .withDebugJava(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -107,7 +107,7 @@ public class SigTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("PJ");
         actualsCommandLine = Sig.builder()
-                .isProfiler(true)
+                .withProfiler(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -119,7 +119,7 @@ public class SigTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("D");
         actualsCommandLine = Sig.builder()
-                .isDebug(true)
+                .withDebug(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
@@ -131,7 +131,7 @@ public class SigTest {
         expectedCommandLine.add("Sig.bat");
         expectedCommandLine.add("WEBCLI");
         actualsCommandLine = Sig.builder()
-                .isWebClient(true)
+                .withWebClient(true)
                 .build()
                 .generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());

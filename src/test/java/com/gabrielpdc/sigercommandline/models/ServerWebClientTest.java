@@ -30,7 +30,7 @@ public class ServerWebClientTest {
         // Teste de execução normal
         expectedCommandLine.add("SRVWC.bat");
         expectedCommandLine.add("INF");
-        actualsCommandLine = ServerWebClient.builder().isShowInfo(true).build().generateCommandLine();
+        actualsCommandLine = ServerWebClient.builder().withShowInfo(true).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
@@ -39,7 +39,7 @@ public class ServerWebClientTest {
         // Teste de execução normal
         expectedCommandLine.add("SRVWC.bat");
         expectedCommandLine.add("EX");
-        actualsCommandLine = ServerWebClient.builder().isJavaOutput(true).build().generateCommandLine();
+        actualsCommandLine = ServerWebClient.builder().withJavaOutput(true).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
@@ -48,7 +48,7 @@ public class ServerWebClientTest {
         // Teste de execução normal
         expectedCommandLine.add("SRVWC.bat");
         expectedCommandLine.add("DJ");
-        actualsCommandLine = ServerWebClient.builder().isDebugJava(true).build().generateCommandLine();
+        actualsCommandLine = ServerWebClient.builder().withDebugJava(true).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
@@ -57,7 +57,7 @@ public class ServerWebClientTest {
         // Teste de execução normal
         expectedCommandLine.add("SRVWC.bat");
         expectedCommandLine.add("/F");
-        actualsCommandLine = ServerWebClient.builder().isTrunk(true).build().generateCommandLine();
+        actualsCommandLine = ServerWebClient.builder().withTrunk(true).build().generateCommandLine();
         assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
     }
 
