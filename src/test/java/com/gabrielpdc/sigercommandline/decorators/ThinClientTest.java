@@ -1,4 +1,4 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gabrielpdc.sigercommandline.models.Itc.OperatingSystem;
+import com.gabrielpdc.sigercommandline.Commons.CommonsTest;
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.decorators.Itc.OperatingSystem;
+import com.gabrielpdc.sigercommandline.models.Term;
 
-public class ThinClientSigerCommandLinesTest {
+public class ThinClientTest {
 
     private ArrayList<String> expectedCommandLine;
-    private ArrayList<String> actualsCommandLine;
+    private ArrayList<Term> actualsCommandLine;
     private GoGlobal goGlobal;
     private VMLinux vmLinux;
     private MultiTenant.Builder multiTenantBuilder;
@@ -36,29 +39,31 @@ public class ThinClientSigerCommandLinesTest {
         // Teste de execução normal
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("Sig.bat");
-        actualsCommandLine = ThinClientSigerCommandLines.builder()
+
+        actualsCommandLine = ThinClient.builder()
                 .itc(itcBuilder.build())
                 .sig(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void vmLinuxSigTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("VMLinux.bat");
-        expectedCommandLine.add("ITC.bat");
-        expectedCommandLine.add("LINUX");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("TC");
-        actualsCommandLine = ThinClientSigerCommandLines.builder()
+        expectedCommandLine.add("ITC.bat LINUX");
+        expectedCommandLine.add("Sig.bat TC");
+
+        actualsCommandLine = ThinClient.builder()
                 .vmLinux(vmLinux)
                 .itc(itcBuilder.serverOperatingSystem(OperatingSystem.LINUX).build())
                 .sig(sigBuilder.withThinClient(true).build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
@@ -67,12 +72,14 @@ public class ThinClientSigerCommandLinesTest {
         expectedCommandLine.add("MT.bat");
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("Sig.bat");
+
         multiTenantBuilder.itc(itcBuilder.build()).sig(sigBuilder.build());
-        actualsCommandLine = ThinClientSigerCommandLines.builder()
+        actualsCommandLine = ThinClient.builder()
                 .multiTenant(multiTenantBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
@@ -81,13 +88,15 @@ public class ThinClientSigerCommandLinesTest {
         expectedCommandLine.add("GoGlobal.bat");
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("Sig.bat");
-        actualsCommandLine = ThinClientSigerCommandLines.builder()
+
+        actualsCommandLine = ThinClient.builder()
                 .goGlobal(goGlobal)
                 .itc(itcBuilder.build())
                 .sig(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
@@ -95,16 +104,17 @@ public class ThinClientSigerCommandLinesTest {
         // Teste de execução normal
         expectedCommandLine.add("ITC.bat");
         expectedCommandLine.add("SRVWC.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("WEBCLI");
+        expectedCommandLine.add("Sig.bat WEBCLI");
+
         sigBuilder.withWebClient(true);
-        actualsCommandLine = ThinClientSigerCommandLines.builder()
+        actualsCommandLine = ThinClient.builder()
                 .itc(itcBuilder.build())
                 .serverWebClient(serverWebClientBuilder.build())
                 .sig(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
 }

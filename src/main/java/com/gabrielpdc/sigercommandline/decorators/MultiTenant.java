@@ -1,7 +1,13 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.models.Term;
+import com.gabrielpdc.sigercommandline.models.TermType;
 
 public class MultiTenant implements SigerCommandLines {
 
@@ -20,9 +26,9 @@ public class MultiTenant implements SigerCommandLines {
     }
 
     @Override
-    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
-        ArrayList<String> commandLines = new ArrayList<>();
-        commandLines.add(MULTI_TENANT_RUNNER);
+    public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
+        ArrayList<Term> commandLines = new ArrayList<Term>();
+        commandLines.add(new Term(TermType.COMMAND, MULTI_TENANT_RUNNER));
         if (itc.isPresent()) {
             commandLines.addAll(itc.get().generateCommandLine());
         }

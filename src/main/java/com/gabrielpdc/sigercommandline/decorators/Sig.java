@@ -1,7 +1,13 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.models.Term;
+import com.gabrielpdc.sigercommandline.models.TermType;
 
 public final class Sig implements SigerCommandLines {
 
@@ -48,38 +54,38 @@ public final class Sig implements SigerCommandLines {
     }
 
     @Override
-    public final ArrayList<String> generateCommandLine() throws SigerCommandLineException {
-        ArrayList<String> commandLines = new ArrayList<>();
-        commandLines.add(SIG_RUNNER);
+    public final ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
+        ArrayList<Term> commandLines = new ArrayList<Term>();
+        commandLines.add(new Term(TermType.COMMAND, SIG_RUNNER));
         if (user.isPresent()) {
-            commandLines.add(USER_PARAM + user.get());
+            commandLines.add(new Term(TermType.PARAM, USER_PARAM + user.get()));
         }
         if (password.isPresent()) {
-            commandLines.add(PASSWORD_PARAM + password.get());
+            commandLines.add(new Term(TermType.PARAM, PASSWORD_PARAM + password.get()));
         }
         if (company.isPresent()) {
-            commandLines.add(COMPANY_PARAM + company.get());
+            commandLines.add(new Term(TermType.PARAM, COMPANY_PARAM + company.get()));
         }
         if (menu.isPresent()) {
-            commandLines.add(MENU_PARAM + menu.get());
+            commandLines.add(new Term(TermType.PARAM, MENU_PARAM + menu.get()));
         }
         if (isDebug) {
-            commandLines.add(DEBUG_PARAM);
+            commandLines.add(new Term(TermType.PARAM, DEBUG_PARAM));
         }
         if (isDebugJava) {
-            commandLines.add(DEBUG_JAVA_PARAM);
+            commandLines.add(new Term(TermType.PARAM, DEBUG_JAVA_PARAM));
         }
         if (isProfiler) {
-            commandLines.add(PROFILER_JAVA_PARAM);
+            commandLines.add(new Term(TermType.PARAM, PROFILER_JAVA_PARAM));
         }
         if (isWebClient) {
-            commandLines.add(WEB_CLIENT_PARAM);
+            commandLines.add(new Term(TermType.PARAM, WEB_CLIENT_PARAM));
         }
         if (isThinClient) {
-            commandLines.add(THIN_CLIENT_PARAM);
+            commandLines.add(new Term(TermType.PARAM, THIN_CLIENT_PARAM));
         }
         if (thinClientPort.isPresent()) {
-            commandLines.add(THIN_CLIENT_PORT_PARAM + thinClientPort.get());
+            commandLines.add(new Term(TermType.PARAM, THIN_CLIENT_PORT_PARAM + thinClientPort.get()));
         }
         return commandLines;
     }

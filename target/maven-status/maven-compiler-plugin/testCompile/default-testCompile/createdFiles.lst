@@ -1,0 +1,9 @@
+com\gabrielpdc\sigercommandline\models\GoGlobalTest.class
+com\gabrielpdc\sigercommandline\models\SigTest.class
+com\gabrielpdc\sigercommandline\models\MultiTenantTest.class
+com\gabrielpdc\sigercommandline\models\VMLinuxTest.class
+com\gabrielpdc\sigercommandline\models\ThinClientSigerCommandLinesTest.class
+com\gabrielpdc\sigercommandline\models\DesktopSigerCommandLinesTest.class
+com\gabrielpdc\sigercommandline\models\ItcTest.class
+com\gabrielpdc\sigercommandline\controllers\SigerCommandLineControllerTest.class
+com\gabrielpdc\sigercommandline\models\ServerWebClientTest.class

@@ -1,9 +1,14 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class ThinClientSigerCommandLines implements SigerCommandLines {
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.models.Term;
+
+public class ThinClient implements SigerCommandLines {
 
     private final Optional<GoGlobal> goGlobal;
     private final Optional<VMLinux> vmLinux;
@@ -12,7 +17,7 @@ public class ThinClientSigerCommandLines implements SigerCommandLines {
     private final Optional<ServerWebClient> serverWebClient;
     private final Optional<Sig> sig;
 
-    public ThinClientSigerCommandLines(Optional<GoGlobal> goGlobal, Optional<VMLinux> vmLinux,
+    public ThinClient(Optional<GoGlobal> goGlobal, Optional<VMLinux> vmLinux,
             Optional<MultiTenant> multiTenant, Optional<ServerWebClient> serverWebClient, Optional<Itc> itc,
             Optional<Sig> sig) {
         this.goGlobal = goGlobal;
@@ -24,12 +29,12 @@ public class ThinClientSigerCommandLines implements SigerCommandLines {
     }
 
     public static Builder builder() {
-        return new ThinClientSigerCommandLines.Builder();
+        return new ThinClient.Builder();
     }
 
     @Override
-    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
-        ArrayList<String> commandLines = new ArrayList<>();
+    public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
+        ArrayList<Term> commandLines = new ArrayList<Term>();
         if (goGlobal.isPresent()) {
             commandLines.addAll(goGlobal.get().generateCommandLine());
         }
@@ -91,8 +96,8 @@ public class ThinClientSigerCommandLines implements SigerCommandLines {
         }
 
         @Override
-        public ThinClientSigerCommandLines build() {
-            return new ThinClientSigerCommandLines(goGlobal, vmLinux, multiTenant, serverWebClient, itc, sig);
+        public ThinClient build() {
+            return new ThinClient(goGlobal, vmLinux, multiTenant, serverWebClient, itc, sig);
         }
     }
 }

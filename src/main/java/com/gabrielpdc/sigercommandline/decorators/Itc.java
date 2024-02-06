@@ -1,7 +1,13 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.models.Term;
+import com.gabrielpdc.sigercommandline.models.TermType;
 
 public final class Itc implements SigerCommandLines {
 
@@ -41,26 +47,26 @@ public final class Itc implements SigerCommandLines {
     }
 
     @Override
-    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
-        ArrayList<String> commandLines = new ArrayList<>();
-        commandLines.add(ITC_RUNNER);
+    public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
+        ArrayList<Term> commandLines = new ArrayList<Term>();
+        commandLines.add(new Term(TermType.COMMAND, ITC_RUNNER));
         if (isPanel) {
-            commandLines.add(PANEL_PARAM);
+            commandLines.add(new Term(TermType.PARAM, PANEL_PARAM));
         }
         if (port.isPresent()) {
-            commandLines.add(PORT_PARAM + port.get());
+            commandLines.add(new Term(TermType.PARAM, PORT_PARAM + port.get()));
         }
         if (isDebug) {
-            commandLines.add(DEBUG_PARAM);
+            commandLines.add(new Term(TermType.PARAM, DEBUG_PARAM));
         }
         if (is64) {
-            commandLines.add(ARCH64_PARAM);
+            commandLines.add(new Term(TermType.PARAM, ARCH64_PARAM));
         }
         if (isJavaOutput) {
-            commandLines.add(JAVA_OUTPUT_PARAM);
+            commandLines.add(new Term(TermType.PARAM, JAVA_OUTPUT_PARAM));
         }
         if (serverOperatingSystem == OperatingSystem.LINUX) {
-            commandLines.add(LINUX_PARAM);
+            commandLines.add(new Term(TermType.PARAM, LINUX_PARAM));
         }
         return commandLines;
     }

@@ -3,12 +3,12 @@ package com.gabrielpdc.sigercommandline.controllers;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gabrielpdc.sigercommandline.controllers.SigerCommandLineController.Architecture;
-import com.gabrielpdc.sigercommandline.models.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.controllers.CommandLineController.Architecture;
 
-public class SigerCommandLineControllerTest {
+public class CommandLineControllerTest {
 
-    private SigerCommandLineController sigerCommandLineControler;
+    private CommandLineController sigerCommandLineControler;
 
     // @Before
     // public void initDesktop() {
@@ -17,7 +17,7 @@ public class SigerCommandLineControllerTest {
 
     @Before
     public void initThinClient() {
-        sigerCommandLineControler = new SigerCommandLineController(Architecture.DESKTOP);
+        sigerCommandLineControler = new CommandLineController(Architecture.DESKTOP);
     }
 
     @Test

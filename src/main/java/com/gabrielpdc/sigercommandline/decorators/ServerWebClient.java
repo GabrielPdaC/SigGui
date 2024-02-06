@@ -1,6 +1,12 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import java.util.ArrayList;
+
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.models.Term;
+import com.gabrielpdc.sigercommandline.models.TermType;
 
 public final class ServerWebClient implements SigerCommandLines {
 
@@ -27,20 +33,20 @@ public final class ServerWebClient implements SigerCommandLines {
     }
 
     @Override
-    public ArrayList<String> generateCommandLine() throws SigerCommandLineException {
-        ArrayList<String> commandLines = new ArrayList<>();
-        commandLines.add(SERVER_WC_RUNNER);
+    public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
+        ArrayList<Term> commandLines = new ArrayList<Term>();
+        commandLines.add(new Term(TermType.COMMAND, SERVER_WC_RUNNER));
         if (isShowInfo){
-            commandLines.add(SHOW_INFO_PARAM);
+            commandLines.add(new Term(TermType.PARAM, SHOW_INFO_PARAM));
         }
         if (isJavaOutput){
-            commandLines.add(JAVA_OUTPUT_PARAM);
+            commandLines.add(new Term(TermType.PARAM, JAVA_OUTPUT_PARAM));
         }
         if (isDebugJava){
-            commandLines.add(DEBUG_JAVA_PARAM);
+            commandLines.add(new Term(TermType.PARAM, DEBUG_JAVA_PARAM));
         }
         if (isTrunk){
-            commandLines.add(TRUNK_PARAM);
+            commandLines.add(new Term(TermType.PARAM, TRUNK_PARAM));
         }
         return commandLines;
     }

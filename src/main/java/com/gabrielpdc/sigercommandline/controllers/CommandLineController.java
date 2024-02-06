@@ -3,26 +3,30 @@ package com.gabrielpdc.sigercommandline.controllers;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.gabrielpdc.sigercommandline.models.CommandLineBuilder;
-import com.gabrielpdc.sigercommandline.models.DesktopSigerCommandLines;
-import com.gabrielpdc.sigercommandline.models.GoGlobal;
-import com.gabrielpdc.sigercommandline.models.Itc;
-import com.gabrielpdc.sigercommandline.models.MultiTenant;
-import com.gabrielpdc.sigercommandline.models.ServerWebClient;
-import com.gabrielpdc.sigercommandline.models.Sig;
-import com.gabrielpdc.sigercommandline.models.SigerCommandLineException;
-import com.gabrielpdc.sigercommandline.models.ThinClientSigerCommandLines;
-import com.gabrielpdc.sigercommandline.models.VMLinux;
-import com.gabrielpdc.sigercommandline.models.Itc.OperatingSystem;
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
+import com.gabrielpdc.sigercommandline.decorators.Desktop;
+import com.gabrielpdc.sigercommandline.decorators.GoGlobal;
+import com.gabrielpdc.sigercommandline.decorators.Itc;
+import com.gabrielpdc.sigercommandline.decorators.MultiTenant;
+import com.gabrielpdc.sigercommandline.decorators.ServerWebClient;
+import com.gabrielpdc.sigercommandline.decorators.Sig;
+import com.gabrielpdc.sigercommandline.decorators.ThinClient;
+import com.gabrielpdc.sigercommandline.decorators.VMLinux;
+import com.gabrielpdc.sigercommandline.decorators.Itc.OperatingSystem;
+import com.gabrielpdc.sigercommandline.decorators.ThinClient.Builder;
+import com.gabrielpdc.sigercommandline.models.Term;
+import com.gabrielpdc.sigercommandline.models.TermType;
 
-public class SigerCommandLineController {
+public class CommandLineController {
 
     /* Arquitetura de execução */
     private Architecture architecture;
 
     public enum Architecture {
         DESKTOP,
-        THIN_CLIENT;
+        THIN_CLIENT,
+        MULTI_TENANT;
     }
 
     // Server options
@@ -31,6 +35,8 @@ public class SigerCommandLineController {
     private boolean serverIsDebug = false;
     private boolean serverIs64 = false;
     private boolean serverIsJavaOutput = false;
+    private boolean serverIsMultiTenant = false;
+    private boolean serverIsWebClient = false;
     private OperatingSystem serverServerOperatingSystem = OperatingSystem.WINDOWS;
 
     // Client options
@@ -49,7 +55,7 @@ public class SigerCommandLineController {
     /**
      * @param architecture
      */
-    public SigerCommandLineController(Architecture architecture) {
+    public CommandLineController(Architecture architecture) {
         this.architecture = architecture;
     }
 
@@ -60,11 +66,27 @@ public class SigerCommandLineController {
         } else {
             commandLineBuilder = generateThinClientCommandLine();
         }
-        return commandLineBuilder.build().generateCommandLine();
+
+        ArrayList<String> commandLines = new ArrayList<String>();
+        StringBuilder commandLineStrBuilder = new StringBuilder();
+        for (Term term : commandLineBuilder.build().generateCommandLine()) {
+
+            if (term.getType()==TermType.COMMAND) {
+                if (!commandLineStrBuilder.isEmpty()) {
+                    commandLines.add(commandLineStrBuilder.toString());
+                    commandLineStrBuilder = new StringBuilder();
+                }
+            } else {
+                commandLineStrBuilder.append(" ");
+            }
+            commandLineStrBuilder.append(term.getTerm());
+        }
+        commandLines.add(commandLineStrBuilder.toString());
+        return commandLines;
     }
 
     private CommandLineBuilder generateDesktopCommandLine() {
-        DesktopSigerCommandLines.Builder desktopSigerCommandLines = DesktopSigerCommandLines.builder(sigBuilder());
+        Desktop.Builder desktopSigerCommandLines = Desktop.builder(sigBuilder());
         if (clientIsGoGlobal) {
             desktopSigerCommandLines.goGlobal(new GoGlobal());
         }
@@ -72,12 +94,22 @@ public class SigerCommandLineController {
     }
 
     private CommandLineBuilder generateThinClientCommandLine() {
-        return ThinClientSigerCommandLines.builder()
-                .sig(sigBuilder())
-                .serverWebClient(serverWebClientBuilder())
-                .multiTenant(multiTenantBuilder())
-                .vmLinux(new VMLinux())
-                .itc(itcBuilder());
+        Builder commandLineBuilder = ThinClient.builder();
+
+        if (serverIsMultiTenant) {
+            commandLineBuilder = commandLineBuilder.multiTenant(multiTenantBuilder());
+        } else if (serverIsWebClient) {
+            commandLineBuilder = commandLineBuilder.serverWebClient(serverWebClientBuilder());
+        } else {
+            commandLineBuilder.sig(sigBuilder())
+                              .itc(itcBuilder());
+        }
+
+        if (serverServerOperatingSystem==OperatingSystem.LINUX) {
+            commandLineBuilder.vmLinux(new VMLinux());
+        }
+
+        return commandLineBuilder;
     }
 
     private Itc itcBuilder() {
@@ -134,87 +166,95 @@ public class SigerCommandLineController {
                 .build();
     }
 
-    public SigerCommandLineController setServerIsPanel(boolean serverIsPanel) {
+    public CommandLineController setServerIsPanel(boolean serverIsPanel) {
         this.serverIsPanel = serverIsPanel;
         return this;
     }
 
-    public SigerCommandLineController setServerPort(Integer serverPort) {
+    public CommandLineController setServerPort(Integer serverPort) {
         this.serverPort = Optional.of(serverPort);
         return this;
     }
 
-    public SigerCommandLineController setServerIsDebug(boolean serverIsDebug) {
+    public CommandLineController setServerIsDebug(boolean serverIsDebug) {
         this.serverIsDebug = serverIsDebug;
         return this;
     }
 
-    public SigerCommandLineController setServerIs64(boolean serverIs64) {
+    public CommandLineController setServerIs64(boolean serverIs64) {
         this.serverIs64 = serverIs64;
         return this;
     }
 
-    public SigerCommandLineController setServerIsJavaOutput(boolean serverIsJavaOutput) {
+    public CommandLineController setServerIsJavaOutput(boolean serverIsJavaOutput) {
         this.serverIsJavaOutput = serverIsJavaOutput;
         return this;
     }
 
-    public SigerCommandLineController setServerServerOperatingSystem(OperatingSystem serverServerOperatingSystem) {
+    public void setServerIsMultiTenant(boolean serverIsMultiTenant) {
+        this.serverIsMultiTenant = serverIsMultiTenant;
+    }
+
+    public void setServerIsWebClient(boolean serverIsWebClient) {
+        this.serverIsWebClient = serverIsWebClient;
+    }
+
+    public CommandLineController setServerServerOperatingSystem(OperatingSystem serverServerOperatingSystem) {
         this.serverServerOperatingSystem = serverServerOperatingSystem;
         return this;
     }
 
-    public SigerCommandLineController setClientCompany(String clientCompany) {
+    public CommandLineController setClientCompany(String clientCompany) {
         this.clientCompany = Optional.of(clientCompany);
         return this;
     }
 
-    public SigerCommandLineController setClientUser(String clientUser) {
+    public CommandLineController setClientUser(String clientUser) {
         this.clientUser = Optional.of(clientUser);
         return this;
     }
 
-    public SigerCommandLineController setClientPassword(String clientPassword) {
+    public CommandLineController setClientPassword(String clientPassword) {
         this.clientPassword = Optional.of(clientPassword);
         return this;
     }
 
-    public SigerCommandLineController setClientMenu(String clientMenu) {
+    public CommandLineController setClientMenu(String clientMenu) {
         this.clientMenu = Optional.of(clientMenu);
         return this;
     }
 
-    public SigerCommandLineController setClientIsDebug(boolean clientIsDebug) {
+    public CommandLineController setClientIsDebug(boolean clientIsDebug) {
         this.clientIsDebug = clientIsDebug;
         return this;
     }
 
-    public SigerCommandLineController setClientIsDebugJava(boolean clientIsDebugJava) {
+    public CommandLineController setClientIsDebugJava(boolean clientIsDebugJava) {
         this.clientIsDebugJava = clientIsDebugJava;
         return this;
     }
 
-    public SigerCommandLineController setClientIsProfiler(boolean clientIsProfiler) {
+    public CommandLineController setClientIsProfiler(boolean clientIsProfiler) {
         this.clientIsProfiler = clientIsProfiler;
         return this;
     }
 
-    public SigerCommandLineController setClientIsWebClient(boolean clientIsWebClient) {
+    public CommandLineController setClientIsWebClient(boolean clientIsWebClient) {
         this.clientIsWebClient = clientIsWebClient;
         return this;
     }
 
-    public SigerCommandLineController setClientIsThinClient(boolean clientIsThinClient) {
+    public CommandLineController setClientIsThinClient(boolean clientIsThinClient) {
         this.clientIsThinClient = clientIsThinClient;
         return this;
     }
 
-    public SigerCommandLineController setClientIsGoGlobal(boolean clientIsGoGlobal) {
+    public CommandLineController setClientIsGoGlobal(boolean clientIsGoGlobal) {
         this.clientIsGoGlobal = clientIsGoGlobal;
         return this;
     }
 
-    public SigerCommandLineController setClientThinClientPort(Integer clientThinClientPort) {
+    public CommandLineController setClientThinClientPort(Integer clientThinClientPort) {
         this.clientThinClientPort = Optional.of(clientThinClientPort);
         return this;
     }

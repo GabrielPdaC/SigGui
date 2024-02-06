@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CommandLineRunner",
+            "request": "launch",
+            "mainClass": "com.gabrielpdc.sigercommandline.CommandLineRunner",
+            "projectName": "SigGui"
+        },
+        {
+            "type": "java",
+            "name": "SigerCommandLine",
+            "request": "launch",
+            "mainClass": "com.gabrielpdc.sigercommandline.SigerCommandLine",
+            "projectName": "SigGui"
+        },
+        {
+            "type": "COBOL",
+            "request": "launch",
+            "name": "COBOL Debugger",
+            "commandLine": "${command:commandLineBuild}",
+            "stopOnEntry": true
+        },
+        {
+            "type": "java",
+            "name": "Java Debug (Attach)",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 6000
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-package com.gabrielpdc.sigercommandline.models;
+package com.gabrielpdc.sigercommandline.decorators;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DesktopSigerCommandLinesTest {
+import com.gabrielpdc.sigercommandline.Commons.CommonsTest;
+import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.models.Term;
+
+public class DesktopTest {
 
     private ArrayList<String> expectedCommandLine;
-    private ArrayList<String> actualsCommandLine;
+    private ArrayList<Term> actualsCommandLine;
     private GoGlobal goGlobal;
     private Sig.Builder sigBuilder;
 
@@ -25,81 +29,86 @@ public class DesktopSigerCommandLinesTest {
     public void sigTest() throws SigerCommandLineException {
         // Teste de execução normal
         expectedCommandLine.add("Sig.bat");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build()).build().generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+        actualsCommandLine = Desktop.builder(sigBuilder.build()).build().generateCommandLine();
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigUserPasswordTest() throws SigerCommandLineException {
         // Teste de execução passando usuário e senha
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-USUARI:RECH");
-        expectedCommandLine.add("VS-SENUSU:RECH12345");
+        expectedCommandLine.add("Sig.bat VS-USUARI:RECH VS-SENUSU:RECH12345");
+
         sigBuilder.user("RECH").password("RECH12345");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigCompanyTest() throws SigerCommandLineException {
         // Teste de execução passando sigla de empresa
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-SIGEMP:GCO");
+        expectedCommandLine.add("Sig.bat VS-SIGEMP:GCO");
+
         sigBuilder.company("GCO");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigMenuTest() throws SigerCommandLineException {
         // Teste de execução passando opção de menu
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-OPCMEN:512A");
+        expectedCommandLine.add("Sig.bat VS-OPCMEN:512A");
+
         sigBuilder.menu("512A");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigDebugJavaTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("DJ");
+        expectedCommandLine.add("Sig.bat DJ");
+
         sigBuilder.withDebugJava(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigProfilerTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("PJ");
+        expectedCommandLine.add("Sig.bat PJ");
+
         sigBuilder.withProfiler(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void sigDebugTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("D");
+        expectedCommandLine.add("Sig.bat D");
+
         sigBuilder.withDebug(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
@@ -107,96 +116,101 @@ public class DesktopSigerCommandLinesTest {
         // Teste de execução normal
         expectedCommandLine.add("GoGlobal.bat");
         expectedCommandLine.add("Sig.bat");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigUserPasswordTest() throws SigerCommandLineException {
         // Teste de execução passando usuário e senha
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-USUARI:RECH");
-        expectedCommandLine.add("VS-SENUSU:RECH12345");
+        expectedCommandLine.add("Sig.bat VS-USUARI:RECH VS-SENUSU:RECH12345");
+
         sigBuilder.user("RECH").password("RECH12345");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigCompanyTest() throws SigerCommandLineException {
         // Teste de execução passando sigla de empresa
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-SIGEMP:GCO");
+        expectedCommandLine.add("Sig.bat VS-SIGEMP:GCO");
+
         sigBuilder.company("GCO");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigMenuTest() throws SigerCommandLineException {
         // Teste de execução passando opção de menu
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("VS-OPCMEN:512A");
+        expectedCommandLine.add("Sig.bat VS-OPCMEN:512A");
+
         sigBuilder.menu("512A");
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigDebugJavaTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("DJ");
+        expectedCommandLine.add("Sig.bat DJ");
+
         sigBuilder.withDebugJava(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigProfilerTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("PJ");
+        expectedCommandLine.add("Sig.bat PJ");
+
         sigBuilder.withProfiler(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
     @Test
     public void goGlobalSigDebugTest() throws SigerCommandLineException {
         // Teste de execução com Web Client
         expectedCommandLine.add("GoGlobal.bat");
-        expectedCommandLine.add("Sig.bat");
-        expectedCommandLine.add("D");
+        expectedCommandLine.add("Sig.bat D");
+
         sigBuilder.withDebug(true);
-        actualsCommandLine = DesktopSigerCommandLines.builder(sigBuilder.build())
+        actualsCommandLine = Desktop.builder(sigBuilder.build())
                 .goGlobal(goGlobal)
                 .build()
                 .generateCommandLine();
-        assertArrayEquals(expectedCommandLine.toArray(), actualsCommandLine.toArray());
+
+        assertArrayEquals(expectedCommandLine.toArray(), CommonsTest.toArrayListString(actualsCommandLine).toArray());
     }
 
 }
