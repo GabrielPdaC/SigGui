@@ -1,13 +1,24 @@
-package com.gabrielpdc.sigercommandline.decorators;
+package com.gabrielpdc.sigercommandline.commands;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
 import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.exceptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.models.Term;
 
+/**
+ * A classe {@code ThinClient} implementa a interface {@code SigerCommandLines},
+ * proporcionando uma maneira de construir linhas de comando para diversos ambientes
+ * e configurações específicas através da combinação de componentes opcionais.
+ * <p>
+ * Esta classe suporta a inclusão condicional de componentes como {@code GoGlobal},
+ * {@code VMLinux}, {@code MultiTenant}, {@code Itc}, {@code ServerWebClient} e {@code Sig}
+ * para a geração dinâmica de comandos de linha de comando baseados nas necessidades específicas
+ * de configuração.
+ * </p>
+ */
 public class ThinClient implements SigerCommandLines {
 
     private final Optional<GoGlobal> goGlobal;
@@ -17,6 +28,16 @@ public class ThinClient implements SigerCommandLines {
     private final Optional<ServerWebClient> serverWebClient;
     private final Optional<Sig> sig;
 
+    /**
+     * Constrói uma instância de {@code ThinClient} com componentes configuráveis opcionais.
+     *
+     * @param goGlobal          Um componente {@code GoGlobal} opcional.
+     * @param vmLinux           Um componente {@code VMLinux} opcional.
+     * @param multiTenant       Um componente {@code MultiTenant} opcional.
+     * @param serverWebClient   Um componente {@code ServerWebClient} opcional.
+     * @param itc               Um componente {@code Itc} opcional.
+     * @param sig               Um componente {@code Sig} opcional.
+     */
     public ThinClient(Optional<GoGlobal> goGlobal, Optional<VMLinux> vmLinux,
             Optional<MultiTenant> multiTenant, Optional<ServerWebClient> serverWebClient, Optional<Itc> itc,
             Optional<Sig> sig) {
@@ -28,10 +49,22 @@ public class ThinClient implements SigerCommandLines {
         this.sig = sig;
     }
 
+    /**
+     * Cria um novo {@code Builder} para a construção de uma instância {@code ThinClient}.
+     *
+     * @return Uma nova instância de {@code Builder}.
+     */
     public static Builder builder() {
         return new ThinClient.Builder();
     }
 
+    /**
+     * Gera uma lista de {@code Term} que representam comandos de linha de comando,
+     * combinando os comandos dos componentes configurados.
+     *
+     * @return Uma lista de {@code Term} representando os comandos de linha de comando.
+     * @throws SigerCommandLineException Se ocorrer um erro na geração dos comandos.
+     */
     @Override
     public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
         ArrayList<Term> commandLines = new ArrayList<Term>();
@@ -56,6 +89,10 @@ public class ThinClient implements SigerCommandLines {
         return commandLines;
     }
 
+    /**
+     * A classe {@code Builder} auxilia na construção de uma instância {@code ThinClient}
+     * de maneira fluente e configurável.
+     */
     public static class Builder implements CommandLineBuilder  {
 
         private Optional<GoGlobal> goGlobal = Optional.empty();

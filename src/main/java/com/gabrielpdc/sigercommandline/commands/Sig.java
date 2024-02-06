@@ -1,11 +1,11 @@
-package com.gabrielpdc.sigercommandline.decorators;
+package com.gabrielpdc.sigercommandline.commands;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
 import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.exceptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.models.Term;
 import com.gabrielpdc.sigercommandline.models.TermType;
 
@@ -34,6 +34,16 @@ public final class Sig implements SigerCommandLines {
     private final boolean isThinClient;
     private final Optional<Integer> thinClientPort;
 
+    /**
+     * A classe {@code Sig} implementa a interface {@code SigerCommandLines} para
+     * fornecer uma maneira configurável de gerar linhas de comando para o SIGER,
+     * suportando diversas opções como usuário, senha, empresa, menu, modos de depuração
+     * e cliente web ou thin client.
+     * <p>
+     * Esta classe utiliza um padrão Builder para facilitar a configuração das diversas
+     * opções disponíveis.
+     * </p>
+     */
     public Sig(Optional<String> company, Optional<String> user, Optional<String> password, Optional<String> menu,
             boolean isDebug, boolean isDebugJava, boolean isProfiler, boolean isWebClient, boolean isThinClient,
             Optional<Integer> thinClientPort) {
@@ -49,10 +59,22 @@ public final class Sig implements SigerCommandLines {
         this.thinClientPort = thinClientPort;
     }
 
+    /**
+     * Cria um novo {@code Builder} para a construção de uma instância {@code Sig}.
+     *
+     * @return Uma nova instância de {@code Builder}.
+     */
     public static Builder builder() {
         return new Sig.Builder();
     }
 
+    /**
+     * Gera uma lista de {@code Term} que representam os comandos de linha de comando,
+     * com base nas configurações fornecidas.
+     *
+     * @return Uma lista de {@code Term} representando os comandos de linha de comando.
+     * @throws SigerCommandLineException Se ocorrer um erro na geração dos comandos.
+     */
     @Override
     public final ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
         ArrayList<Term> commandLines = new ArrayList<Term>();
@@ -90,6 +112,10 @@ public final class Sig implements SigerCommandLines {
         return commandLines;
     }
 
+    /**
+     * A classe {@code Builder} para {@code Sig} facilita a configuração e construção
+     * de uma instância {@code Sig} com opções específicas de linha de comando.
+     */
     public static final class Builder implements CommandLineBuilder  {
 
         private Optional<String> company = Optional.empty();

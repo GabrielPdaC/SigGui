@@ -1,14 +1,22 @@
-package com.gabrielpdc.sigercommandline.decorators;
+package com.gabrielpdc.sigercommandline.commands;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.Interfaces.CommandLineBuilder;
 import com.gabrielpdc.sigercommandline.Interfaces.SigerCommandLines;
+import com.gabrielpdc.sigercommandline.exceptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.models.Term;
 import com.gabrielpdc.sigercommandline.models.TermType;
 
+/**
+ * Classe {@code Itc} responsável por construir linhas de comando para a execução
+ * de servidores ITC com opções configuráveis como painel de controle, porta,
+ * modo debug, arquitetura 64 bits, saída Java e sistema operacional do servidor.
+ *
+ * Esta classe final implementa a interface {@code SigerCommandLines} e suporta
+ * a customização das linhas de comando através de um padrão Builder.
+ */
 public final class Itc implements SigerCommandLines {
 
     private static String ITC_RUNNER = "ITC.bat";
@@ -26,12 +34,24 @@ public final class Itc implements SigerCommandLines {
     private final boolean isJavaOutput;
     private final OperatingSystem serverOperatingSystem;
 
-    /* Sistemas operacionais para executar o server */
+    /**
+     * Enumeração de sistemas operacionais suportados para execução do servidor.
+     */
     public enum OperatingSystem {
         WINDOWS,
         LINUX;
     }
 
+    /**
+     * Construtor da classe {@code Itc}.
+     *
+     * @param isPanel Indica se o painel de controle deve ser ativado.
+     * @param port A porta na qual o servidor deve escutar.
+     * @param isDebug Indica se o modo debug está ativado.
+     * @param is64 Indica se a arquitetura 64 bits está ativada.
+     * @param isJavaOutput Indica se a saída Java está ativada.
+     * @param serverOperatingSystem O sistema operacional do servidor.
+     */
     public Itc(boolean isPanel, Optional<Integer> port, boolean isDebug, boolean is64, boolean isJavaOutput,
             OperatingSystem serverOperatingSystem) {
         this.isPanel = isPanel;
@@ -46,6 +66,12 @@ public final class Itc implements SigerCommandLines {
         return new Itc.Builder();
     }
 
+    /**
+     * Método para construir linhas de comando com as configurações especificadas.
+     *
+     * @return Uma lista de {@code Term} contendo os comandos de linha de comando.
+     * @throws SigerCommandLineException Se ocorrer um erro na geração dos comandos.
+     */
     @Override
     public ArrayList<Term> generateCommandLine() throws SigerCommandLineException {
         ArrayList<Term> commandLines = new ArrayList<Term>();
@@ -71,6 +97,10 @@ public final class Itc implements SigerCommandLines {
         return commandLines;
     }
 
+    /**
+     * Builder para a classe {@code Itc} que facilita a configuração e construção
+     * de uma instância com opções específicas.
+     */
     public static class Builder implements CommandLineBuilder {
 
         private boolean isPanel = false;

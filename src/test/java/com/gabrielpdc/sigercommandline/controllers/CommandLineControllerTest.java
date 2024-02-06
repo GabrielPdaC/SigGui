@@ -3,8 +3,8 @@ package com.gabrielpdc.sigercommandline.controllers;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
 import com.gabrielpdc.sigercommandline.controllers.CommandLineController.Architecture;
+import com.gabrielpdc.sigercommandline.exceptions.SigerCommandLineException;
 
 public class CommandLineControllerTest {
 

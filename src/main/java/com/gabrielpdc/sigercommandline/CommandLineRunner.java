@@ -2,10 +2,10 @@ package com.gabrielpdc.sigercommandline;
 
 import java.util.Scanner;
 
-import com.gabrielpdc.sigercommandline.Execptions.SigerCommandLineException;
+import com.gabrielpdc.sigercommandline.commands.Itc.OperatingSystem;
 import com.gabrielpdc.sigercommandline.controllers.CommandLineController;
 import com.gabrielpdc.sigercommandline.controllers.CommandLineController.Architecture;
-import com.gabrielpdc.sigercommandline.decorators.Itc.OperatingSystem;
+import com.gabrielpdc.sigercommandline.exceptions.SigerCommandLineException;
 
 public class CommandLineRunner {
     public static void main(String[] args) {
@@ -20,13 +20,13 @@ public class CommandLineRunner {
 
         answer = scanner.nextLine();
 
-        if (answer.contains("D")) {
+        if (answer.toUpperCase().contains("D")) {
             sigerCommandLineController = new CommandLineController(Architecture.DESKTOP);
 
         } else {
             sigerCommandLineController = new CommandLineController(Architecture.THIN_CLIENT);
 
-            if (answer.contains("M")) {
+            if (answer.toUpperCase().contains("M")) {
                 sigerCommandLineController.setServerIsMultiTenant(true);
             }
 
@@ -35,18 +35,21 @@ public class CommandLineRunner {
             System.out.println("[L] Linux");
             answer = scanner.nextLine();
 
-            if (answer.contains("W")) {
+            if (answer.toUpperCase().contains("W")) {
                 sigerCommandLineController.setServerServerOperatingSystem(OperatingSystem.WINDOWS);
             } else {
                 sigerCommandLineController.setServerServerOperatingSystem(OperatingSystem.LINUX);
             }
         }
 
+        System.out.println("Deseja executar no modo debug? (S/_)");
+        answer = scanner.nextLine();
 
-        //     System.out.println("Como deseja executar o client?");
-        //     System.out.println("[D] Desktop");
-        //     System.out.println("[G] GoGlobal");
-        // }
+        if (answer.toUpperCase().contains("S")) {
+            sigerCommandLineController.setClientIsDebug(true);
+            sigerCommandLineController.setServerIsDebug(true);
+        }
+
         System.out.println("\nLinhas de comando para execução do SIGER: ");
         try {
             for (String command : sigerCommandLineController.generateCommandLine()) {

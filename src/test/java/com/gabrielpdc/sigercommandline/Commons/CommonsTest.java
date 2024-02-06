@@ -1,4 +1,4 @@
-package com.gabrielpdc.sigercommandline.Commons;
+package com.gabrielpdc.sigercommandline.commons;
 
 import java.util.ArrayList;
 
